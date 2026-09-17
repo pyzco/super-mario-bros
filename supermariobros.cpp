@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <string>
 
+//edicion para ver si funciona
+
 const int FILAS = 50;
 const int COLUMNAS = 120;
 
@@ -16,6 +18,8 @@ const std::string COL_LIGHTBLUE  = "\033[104m";
 const std::string COL_LIGHTYELLOW = "\033[103m";
 const std::string FONDO_MARRON   = "\033[43;2;139;69;19m";
 
+/// oooo
+///
 const int ALTO_ARBUSTO = 7;
 const int ANCHO_ARBUSTO = 8;
 
