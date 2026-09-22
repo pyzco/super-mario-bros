@@ -1,25 +1,39 @@
+///////////////////////////////////
+/// Librerias
+///////////////////////////////////
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
 
-//edicion para ver si funciona
+///////////////////////////////////
+/// Settings
+///////////////////////////////////
 
 const int FILAS = 50;
 const int COLUMNAS = 120;
 
 const std::string RESET          = "\033[0m";
-const std::string FONDO_BLANCO   = "\033[47m"; 
-const std::string FONDO_ROJO     = "\033[41m";   
-const std::string FONDO_VERDE    = "\033[42m";     
-const std::string FONDO_AMARILLO = "\033[43m";  
-const std::string FONDO_NEGRO    = "\033[40m";       
+const std::string FONDO_BLANCO   = "\033[47m";
+const std::string FONDO_ROJO     = "\033[41m";
+const std::string FONDO_VERDE    = "\033[42m";
+const std::string FONDO_AMARILLO = "\033[43m";
+const std::string FONDO_NEGRO    = "\033[40m";
 const std::string FONDO_PIEL     = "\033[107m";
-const std::string COL_LIGHTBLUE  = "\033[104m";   
+const std::string COL_LIGHTBLUE  = "\033[104m";
 const std::string COL_LIGHTYELLOW = "\033[103m";
 const std::string FONDO_MARRON   = "\033[43;2;139;69;19m";
 
-/// oooo
-///
+
+std::string colores[9] = {
+    FONDO_PIEL, FONDO_ROJO, FONDO_VERDE, FONDO_AMARILLO, FONDO_NEGRO, FONDO_BLANCO,
+    COL_LIGHTBLUE, COL_LIGHTYELLOW, FONDO_MARRON };
+
+
+///////////////////////////////////
+/// Elementos del mundo
+///////////////////////////////////
+
 const int ALTO_ARBUSTO = 7;
 const int ANCHO_ARBUSTO = 8;
 
@@ -27,8 +41,8 @@ int arbusto[ALTO_ARBUSTO][ANCHO_ARBUSTO] = {
     {0, 0, 0, 2, 2, 0, 0, 0},
     {0, 0, 2, 2, 2, 2, 0, 0},
     {0, 2, 2, 2, 2, 2, 2, 0},
-    {2, 2, 2, 2, 2, 2, 2, 2}, 
-    {2, 2, 2, 2, 2, 2, 2, 2}, 
+    {2, 2, 2, 2, 2, 2, 2, 2},
+    {2, 2, 2, 2, 2, 2, 2, 2},
     {2, 2, 2, 2, 2, 2, 2, 2},
     {2, 2, 2, 2, 2, 2, 2, 2}
 };
@@ -40,8 +54,8 @@ int signo[ALTO_SIGNO][ANCHO_SIGNO] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3},
     {3, 3, 3, 4, 4, 4, 3, 3, 3},
     {3, 3, 4, 3, 3, 3, 4, 3, 3},
-    {3, 3, 3, 3, 3, 4, 4, 3, 3}, 
-    {3, 3, 3, 3, 4, 3, 3, 3, 3}, 
+    {3, 3, 3, 3, 3, 4, 4, 3, 3},
+    {3, 3, 3, 3, 4, 3, 3, 3, 3},
     {3, 3, 3, 3, 3, 3, 3, 3, 3},
     {3, 3, 3, 3, 4, 3, 3, 3, 3},
     {3, 3, 3, 3, 3, 3, 3, 3, 3}
@@ -50,22 +64,38 @@ int signo[ALTO_SIGNO][ANCHO_SIGNO] = {
 const int ALTO_LADRILLO = 8;
 const int ANCHO_LADRILLO = 9;
 
-int ladrillo[ALTO_LADRILLO][ANCHO_LADRILLO] = { 
+int ladrillo[ALTO_LADRILLO][ANCHO_LADRILLO] = {
     {1, 1, 1, 1, 4, 1, 1, 1, 1},
     {1, 1, 1, 1, 4, 1, 1, 1, 1},
     {4, 4, 4, 4, 4, 4, 4, 4, 4},
-    {1, 1, 4, 1, 1, 1, 4, 1, 1}, 
-    {1, 1, 4, 1, 1, 1, 4, 1, 1}, 
+    {1, 1, 4, 1, 1, 1, 4, 1, 1},
+    {1, 1, 4, 1, 1, 1, 4, 1, 1},
     {4, 4, 4, 4, 4, 4, 4, 4, 4},
     {1, 1, 1, 1, 4, 1, 1, 1, 1},
     {1, 1, 1, 1, 4, 1, 1, 1, 1}
 };
 
+///////////////////////////////////
+/// Funciones de mundo - Configuración
+///////////////////////////////////
+
+/*
+void colocarObjeto(int** mundo, int origenFila, int origenColumna, int objeto[], int alto, int ancho) {
+    for (int f = 0; f < alto; f++) {
+        for (int c = 0; c < ancho; c++) {
+            if (objeto[f][c] == 2) {
+                mundo[origenFila + f][origenColumna + c] = 2;
+            }
+        }
+    }
+}
+*/
+
 void colocar_arbusto(int** mundo, int origenFila, int origenColumna) {
     for (int f = 0; f < ALTO_ARBUSTO; f++) {
         for (int c = 0; c < ANCHO_ARBUSTO; c++) {
             if (arbusto[f][c] == 2) {
-                mundo[origenFila + f][origenColumna + c] = 2; 
+                mundo[origenFila + f][origenColumna + c] = 2;
             }
         }
     }
@@ -75,7 +105,7 @@ void colocar_signo(int** mundo, int origenFila, int origenColumna) {
     for (int f = 0; f < ALTO_SIGNO; f++) {
         for (int c = 0; c < ANCHO_SIGNO; c++) {
             if (signo[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = signo[f][c]; 
+                mundo[origenFila + f][origenColumna + c] = signo[f][c];
             }
         }
     }
@@ -85,11 +115,15 @@ void colocar_ladrillo(int** mundo, int origenFila, int origenColumna) {
     for (int f = 0; f < ALTO_LADRILLO; f++) {
         for (int c = 0; c < ANCHO_LADRILLO; c++) {
             if (ladrillo[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = ladrillo[f][c]; 
+                mundo[origenFila + f][origenColumna + c] = ladrillo[f][c];
             }
         }
     }
 }
+
+//////////////////////////////////////
+/// Player skins
+//////////////////////////////////////
 
 const int ALTO_MARIO = 16;
 const int ANCHO_MARIO = 12;
@@ -117,11 +151,15 @@ void draw_player(int** mundo, int origenFila, int origenColumna) {
     for (int f = 0; f < ALTO_MARIO; f++) {
         for (int c = 0; c < ANCHO_MARIO; c++) {
             if (mario[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = mario[f][c]; 
+                mundo[origenFila + f][origenColumna + c] = mario[f][c];
             }
         }
     }
 }
+
+//////////////////////////////////////
+/// Whomp
+//////////////////////////////////////
 
 const int ALTO_WHOMP = 16;
 const int ANCHO_WHOMP = 16;
@@ -149,11 +187,15 @@ void draw_whomp(int** mundo, int origenFila, int origenColumna) {
     for (int f = 0; f < ALTO_WHOMP; f++) {
         for (int c = 0; c < ANCHO_WHOMP; c++) {
             if (whomp[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = whomp[f][c]; 
+                mundo[origenFila + f][origenColumna + c] = whomp[f][c];
             }
         }
     }
 }
+
+///////////////////////////////////
+/// Generar mundo
+//////////////////////////////////////
 
 int** crear_world(){
     int **mundo = new int*[FILAS];
@@ -168,6 +210,8 @@ int** crear_world(){
             }
         }
     }
+
+    // colocar objetos
 
     colocar_arbusto(mundo,36,21);
     colocar_arbusto(mundo,36,29);
@@ -186,16 +230,65 @@ int** crear_world(){
     return mundo;
 }
 
-void borra_player(int** mundo, int origenFila, int origenColumna) {
-    for (int f = 0; f < ALTO_MARIO; f++) {
-        for (int c = 0; c < ANCHO_MARIO; c++) {
-            if (mario[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = 0; 
+int** crear_world_copia(){
+    int **mundo_copia = new int*[FILAS];
+
+    for (int fila = 0; fila < FILAS; fila++){
+        mundo_copia[fila] = new int[COLUMNAS];
+        for (int columna = 0; columna < COLUMNAS; columna++){
+            if (fila >= 43){
+                mundo_copia[fila][columna] = 1;
+            } else{
+                mundo_copia[fila][columna] = 0;
             }
         }
     }
+
+    // colocar objetos
+
+    colocar_arbusto(mundo_copia,36,21);
+    colocar_arbusto(mundo_copia,36,29);
+    colocar_arbusto(mundo_copia,36,37);
+    colocar_arbusto(mundo_copia,7,29);
+    colocar_arbusto(mundo_copia,36,98);
+    colocar_signo(mundo_copia,7,29);
+    colocar_ladrillo(mundo_copia,7,73);
+    colocar_signo(mundo_copia,7,82);
+    colocar_ladrillo(mundo_copia,7,91);
+    colocar_signo(mundo_copia,7,100);
+    colocar_ladrillo(mundo_copia,7,109);
+    draw_whomp(mundo_copia,27,104);
+
+    return mundo_copia;
 }
 
+
+/////////////////////////////////////
+/// Dibujar el mundo
+//////////////////////////////////////
+
+void draw_world(int **world, int coins){
+    system("cls");
+
+    std::cout << "\nWelcome to the world of super mario bros xyz\n";
+
+    for (int f = 0; f < FILAS; f++){
+        for (int c = 0; c < COLUMNAS; c++){
+            int celda = world[f][c];
+
+            std::cout << colores[celda] << "  " << RESET;
+
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\ncoins: " << coins << "\n\n";
+}
+
+///////////////////////////////////
+/// Funciones de juego
+//////////////////////////////////////
+
+// lucky block golpeado se vuelve negro
 void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto) {
     int f_inicio = f_impacto;
     int c_inicio = c_impacto;
@@ -216,7 +309,10 @@ void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto) {
     }
 }
 
+// obtener moneda del lucky coin - ?
 bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire) {
+    //draw_player(mundo, marioFilaAire, marioColumnaAire);
+
     for (int c = marioColumnaAire; c < marioColumnaAire + ANCHO_MARIO; c++) {
         if (c >= 0 && c < COLUMNAS) {
             for (int f = marioFilaAire; f < marioFilaAire + 4; f++) {
@@ -232,6 +328,7 @@ bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire) {
     return false;
 }
 
+// game over
 bool check_game_over(int marioF, int marioC, int goombaF, int goombaC) {
     if (marioF < goombaF + ALTO_WHOMP &&
         marioF + ALTO_MARIO > goombaF &&
@@ -242,8 +339,25 @@ bool check_game_over(int marioF, int marioC, int goombaF, int goombaC) {
     return false;
 }
 
-void move_player(int** mundo, int &marioFila, int &marioColumna, std::string option, int &numCoins) {
-    borra_player(mundo, marioFila, marioColumna);
+
+///////////////////////////////////
+/// Funciones de jugador
+//////////////////////////////////////
+
+// eliminar jugador - reescribir el mundo original
+void borra_player(int** mundo, int origenFila, int origenColumna, int** matrizCopia) {
+    for (int f = 0; f < ALTO_MARIO; f++) {
+        for (int c = 0; c < ANCHO_MARIO; c++) {
+            if (mario[f][c] != 0) {
+                mundo[origenFila + f][origenColumna + c] = matrizCopia[origenFila+f][origenColumna+c];
+            }
+        }
+    }
+}
+
+void move_player(int** mundo, int &marioFila, int &marioColumna, std::string option, int &numCoins, int** matrizCopia) {
+
+    borra_player(mundo, marioFila, marioColumna, matrizCopia);
 
     int nuevaCol = marioColumna;
     int nuevaFila = marioFila;
@@ -258,9 +372,11 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
         }
     } else if (option == "up") {
         int filaAire = marioFila - 16;
+        //borra_player(mundo,marioFila,marioColumna,matrizCopia); ////
         if (collect_coins(mundo, filaAire, marioColumna)) {
             numCoins++;
         }
+        //borra_player(mundo, filaAire, marioColumna, matrizCopia);
     } else if (option == "up-right") {
         if (marioColumna + 12 + ANCHO_MARIO <= COLUMNAS) {
             nuevaCol += 12;
@@ -285,49 +401,6 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     draw_player(mundo, marioFila, marioColumna);
 }
 
-void draw_world(int **world, int coins){
-    system("cls");
-
-    std::cout << "\nWelcome to the world of super mario bros xyz\n";
-    
-    for (int f = 0; f < FILAS; f++){
-        for (int c = 0; c < COLUMNAS; c++){
-            int celda = world[f][c];
-
-            switch (celda) {
-                case 1: 
-                    std::cout << FONDO_ROJO << "  " << RESET;
-                    break;
-                case 2:
-                    std::cout << FONDO_VERDE << "  " << RESET;
-                    break;
-                case 3: 
-                    std::cout << FONDO_AMARILLO << "  " << RESET;
-                    break;
-                case 4:
-                    std::cout << FONDO_NEGRO << "  " << RESET;
-                    break;
-                case 5:
-                    std::cout << FONDO_BLANCO << "  " << RESET;
-                    break;
-                case 6:
-                    std::cout << COL_LIGHTBLUE << "  " << RESET;
-                    break;
-                case 7:
-                    std::cout << COL_LIGHTYELLOW << "  " << RESET;
-                    break;
-                case 8:
-                    std::cout << FONDO_MARRON << "  " << RESET;
-                    break;
-                default: 
-                    std::cout << FONDO_PIEL << "  " << RESET;
-                    break;
-            }
-        }
-        std::cout << "\n";
-    }
-    std::cout << "\ncoins: " << coins << "\n\n";
-}
 
 int main(){
 
@@ -340,7 +413,8 @@ int main(){
     int whompColumna = 104;
 
     int **mundo = crear_world();
-    
+    int **mundoCopia = crear_world_copia();
+
     while (true){
         std::cout << "Consola: ";
         std::cin >> opcion;
@@ -348,7 +422,7 @@ int main(){
         if (opcion == "init"){
             draw_world(mundo, numCoins);
         } else if (opcion == "right" || opcion == "left" || opcion == "up" || opcion == "up-right" || opcion == "up-left") {
-            move_player(mundo, marioFila, marioColumna, opcion, numCoins);
+            move_player(mundo, marioFila, marioColumna, opcion, numCoins, mundoCopia);
             draw_world(mundo, numCoins);
 
             if (check_game_over(marioFila, marioColumna, whompFila, whompColumna)) {
@@ -359,7 +433,7 @@ int main(){
                 }
                 delete[] mundo;
 
-                while (true) {} 
+                while (true) {}
             }
         }
     }
