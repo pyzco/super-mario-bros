@@ -270,7 +270,7 @@ int** crear_world_copia(){
 //////////////////////////////////////
 
 void draw_world(int **world, int coins){
-    system("cls");
+    std::cout << "\033[2J\033[H";
 
     std::cout << "\nWelcome to the world of super mario bros xyz\n";
 
@@ -291,7 +291,7 @@ void draw_world(int **world, int coins){
 //////////////////////////////////////
 
 // lucky block golpeado se vuelve negro
-void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto) {
+void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matrizCopia) {
     int f_inicio = f_impacto;
     int c_inicio = c_impacto;
 
@@ -306,13 +306,14 @@ void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto) {
         for (int c = 0; c < ANCHO_SIGNO; c++) {
             if (f_inicio + f < FILAS && c_inicio + c < COLUMNAS) {
                 mundo[f_inicio + f][c_inicio + c] = 4;
+                matrizCopia[f_inicio + f][c_inicio + c] = 4;
             }
         }
     }
 }
 
 // obtener moneda del lucky coin - ?
-bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire) {
+bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** matrizCopia) {
     //draw_player(mundo, marioFilaAire, marioColumnaAire);
 
     for (int c = marioColumnaAire; c < marioColumnaAire + ANCHO_MARIO; c++) {
@@ -320,7 +321,7 @@ bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire) {
             for (int f = marioFilaAire; f < marioFilaAire + 4; f++) {
                 if (f >= 0 && f < FILAS) {
                     if (mundo[f][c] == 3) {
-                        pintar_bloque_negro(mundo, f, c);
+                        pintar_bloque_negro(mundo, f, c, matrizCopia);
                         return true;
                     }
                 }
@@ -377,7 +378,7 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     } else if (option == "up") {
         int filaAire = marioFila - 16;
         //borra_player(mundo,marioFila,marioColumna,matrizCopia); ////
-        if (collect_coins(mundo, filaAire, marioColumna)) {
+        if (collect_coins(mundo, filaAire, marioColumna, matrizCopia)) {
             numCoins++;
         }
         //borra_player(mundo, filaAire, marioColumna, matrizCopia);
@@ -386,7 +387,7 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
             nuevaCol += 12;
         }
         int filaAire = marioFila - 16;
-        if (collect_coins(mundo, filaAire, nuevaCol)) {
+        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia)) {
             numCoins++;
         }
     } else if (option == "up-left") {
@@ -394,7 +395,7 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
             nuevaCol -= 12;
         }
         int filaAire = marioFila - 16;
-        if (collect_coins(mundo, filaAire, nuevaCol)) {
+        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia)) {
             numCoins++;
         }
     }
@@ -410,6 +411,16 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     draw_player(mundo, filaDibujo, marioColumna);
 }
 
+bool movimiento_es_valido(int marioColumna, std::string option) {
+    if (option == "right" || option == "up-right") {
+        return marioColumna + 12 + ANCHO_MARIO <= COLUMNAS;
+    }
+    if (option == "left" || option == "up-left") {
+        return marioColumna - 12 >= 0;
+    }
+    return true;
+}
+
 
 int main(){
 
@@ -423,33 +434,76 @@ int main(){
 
     int **mundo = crear_world();
     int **mundoCopia = crear_world_copia();
-
-    while (true){
+    do
+    {
         std::cout << "Consola: ";
         std::cin >> opcion;
-
-        if (opcion == "init"){
-            draw_world(mundo, numCoins);
-        } else if (opcion == "right" || opcion == "left" || opcion == "up" || opcion == "up-right" || opcion == "up-left") {
+        if (!std::cin) return 0;
+    } while(opcion != "init" && opcion !="exit");
+    if (opcion == "init")
+        draw_world(mundo, numCoins);
+    else
+    {
+        for (int i = 0; i < FILAS; i++)
+            {
+                delete[] mundo[i];
+                delete[] mundoCopia[i];
+            }
+        delete[] mundo;
+        delete[] mundoCopia;
+        return 0;
+    }    
+    while (true)
+    {
+        std::cout << "Consola: ";
+        std::cin >> opcion;
+        if (!std::cin) break;
+        if (opcion == "right" || opcion == "left" || opcion == "up" || opcion == "up-right" || opcion == "up-left") 
+        {
+            if (!movimiento_es_valido(marioColumna, opcion)) 
+            {
+            std::cout << "invalid operation\n";
+            continue;
+            }
             move_player(mundo, marioFila, marioColumna, opcion, numCoins, mundoCopia);
             draw_world(mundo, numCoins);
-            if (opcion == "up" || opcion == "up-right" || opcion == "up-left") {
+            if (opcion == "up" || opcion == "up-right" || opcion == "up-left") 
+            {
                 std::this_thread::sleep_for(std::chrono::milliseconds(400));
                 move_player(mundo, marioFila, marioColumna, "envrdestonosirvedenada", numCoins, mundoCopia);
                 draw_world(mundo, numCoins);
             }
-            if (check_game_over(marioFila, marioColumna, whompFila, whompColumna)) {
+            if (check_game_over(marioFila, marioColumna, whompFila, whompColumna)) 
+            {
                 std::cout << "game over\n";
 
-                for (int i = 0; i < FILAS; i++){
+                for (int i = 0; i < FILAS; i++)
+                {
                     delete[] mundo[i];
+                    delete[] mundoCopia[i];
                 }
                 delete[] mundo;
+                delete[] mundoCopia;
 
-                while (true) {}
+                break;
             }
         }
+        else if (opcion == "exit")
+        {
+            std::cout<<"game over\n";
+            for (int i = 0; i < FILAS; i++)
+                {
+                    delete[] mundo[i];
+                    delete[] mundoCopia[i];
+                }
+            delete[] mundo;
+            delete[] mundoCopia;
+            break;
+        }
+        else
+        {
+            std::cout<<"invalid operation\n";
+        }
     }
-
     return 0;
 }
