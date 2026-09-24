@@ -283,7 +283,7 @@ void draw_world(int **world, int coins){
         }
         std::cout << "\n";
     }
-    std::cout << "\ncoins: " << coins << "\n\n";
+    std::cout << "\ncoins = " << coins << "\n\n";
 }
 
 ///////////////////////////////////
@@ -469,7 +469,7 @@ int main(){
             draw_world(mundo, numCoins);
             if (opcion == "up" || opcion == "up-right" || opcion == "up-left") 
             {
-                std::this_thread::sleep_for(std::chrono::milliseconds(400));
+                std::this_thread::sleep_for(std::chrono::milliseconds(350));
                 move_player(mundo, marioFila, marioColumna, "envrdestonosirvedenada", numCoins, mundoCopia);
                 draw_world(mundo, numCoins);
             }
@@ -491,13 +491,6 @@ int main(){
         else if (opcion == "exit")
         {
             std::cout<<"game over\n";
-            for (int i = 0; i < FILAS; i++)
-                {
-                    delete[] mundo[i];
-                    delete[] mundoCopia[i];
-                }
-            delete[] mundo;
-            delete[] mundoCopia;
             break;
         }
         else
@@ -505,5 +498,12 @@ int main(){
             std::cout<<"invalid operation\n";
         }
     }
+    for (int i = 0; i < FILAS; i++)
+    {
+        delete[] mundo[i];
+        delete[] mundoCopia[i];
+    }
+    delete[] mundo;
+    delete[] mundoCopia;
     return 0;
 }
