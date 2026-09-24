@@ -462,7 +462,7 @@ int main(){
         {
             if (!movimiento_es_valido(marioColumna, opcion))
             {
-            std::cout << "invalid operation\n";
+            std::cout << "invalid operation - fuera de los límites del mundo\n";
             continue;
             }
             move_player(mundo, marioFila, marioColumna, opcion, numCoins, mundoCopia);
@@ -495,7 +495,7 @@ int main(){
         }
         else
         {
-            std::cout<<"invalid operation\n";
+            std::cout<<"invalid operation - comando no reconocido\n";
         }
     }
     for (int i = 0; i < FILAS; i++)
