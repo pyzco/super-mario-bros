@@ -476,15 +476,6 @@ int main(){
             if (check_game_over(marioFila, marioColumna, whompFila, whompColumna)) 
             {
                 std::cout << "game over\n";
-
-                for (int i = 0; i < FILAS; i++)
-                {
-                    delete[] mundo[i];
-                    delete[] mundoCopia[i];
-                }
-                delete[] mundo;
-                delete[] mundoCopia;
-
                 break;
             }
         }
