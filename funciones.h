@@ -21,6 +21,18 @@
 inline const int FILAS = 50;
 inline const int COLUMNAS = 120;
 
+extern const std::string RESET;
+extern const std::string FONDO_BLANCO;
+extern const std::string FONDO_ROJO;
+extern const std::string FONDO_VERDE;
+extern const std::string FONDO_AMARILLO;
+extern const std::string FONDO_NEGRO;
+extern const std::string FONDO_PIEL;
+extern const std::string COL_LIGHTBLUE;
+extern const std::string COL_LIGHTYELLOW;
+extern const std::string FONDO_MARRON;
+
+extern std::string colores[9];
 
 ///////////////////////////////////
 /// Elementos del mundo

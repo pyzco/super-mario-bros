@@ -31,7 +31,7 @@ std::string colores[9] = {
     FONDO_PIEL, FONDO_ROJO, FONDO_VERDE, FONDO_AMARILLO, FONDO_NEGRO, FONDO_BLANCO,
     COL_LIGHTBLUE, COL_LIGHTYELLOW, FONDO_MARRON };
 
-
+    
 ///////////////////////////////////
 /// Funciones de configuración del mundo
 ///////////////////////////////////

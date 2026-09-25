@@ -14,21 +14,6 @@
 #include <thread>
 #include <chrono>
 
-const std::string RESET          = "\x1b[0m";
-const std::string FONDO_BLANCO   = "\x1b[47m";
-const std::string FONDO_ROJO     = "\x1b[41m";
-const std::string FONDO_VERDE    = "\x1b[42m";
-const std::string FONDO_AMARILLO = "\x1b[43m";
-const std::string FONDO_NEGRO    = "\x1b[40m";
-const std::string FONDO_PIEL     = "\x1b[107m";
-const std::string COL_LIGHTBLUE  = "\x1b[104m";
-const std::string COL_LIGHTYELLOW = "\x1b[103m";
-const std::string FONDO_MARRON   = "\x1b[43;2;139;69;19m";
-
-std::string colores[9] = {
-    FONDO_PIEL, FONDO_ROJO, FONDO_VERDE, FONDO_AMARILLO, FONDO_NEGRO, FONDO_BLANCO,
-    COL_LIGHTBLUE, COL_LIGHTYELLOW, FONDO_MARRON };
-
 
 int main(){
 

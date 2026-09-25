@@ -8,8 +8,17 @@
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
   </component>
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
   <component name="CMakeProjectFlavorService">
     <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -26,6 +35,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -49,6 +59,12 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="zbEl4JMj" />
   </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2026" />
+    <option name="minorVersion" value="2.1" />
+    <option name="productBranch" value="Classic" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5,
   &quot;fromUser&quot;: false
@@ -63,8 +79,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "C/C++ File.codeforce.cpp.executor": "Run",
     "C/C++ File.main.cpp.executor": "Run",
     "C/C++ File.supermariobros.cpp.executor": "Run",
+    "CMake Application.super_mario_bros.executor": "Run",
     "CidrDebugProfileConversion": "true",
     "LaTeX.main.executor": "Run",
     "RunOnceActivity.RadMigrateCodeStyle": "true",
@@ -76,7 +94,6 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "ramita",
     "git.auto.fetch.suggestion.counter": "1",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -94,7 +111,30 @@
       <recent name="C:\Users\User01\Documents\utec26_2\progra2\super-mario-bros" />
     </key>
   </component>
-  <component name="RunManager" selected="C/C++ File.main.cpp">
+  <component name="RunManager" selected="C/C++ File.codeforce.cpp">
+    <configuration default="true" type="BIBTEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
+      <texify-bibtex>
+        <compiler />
+        <compiler-path />
+        <compiler-arguments />
+        <envs />
+        <main-file />
+        <aux-dir />
+        <latex-distribution>PROJECT_SDK</latex-distribution>
+      </texify-bibtex>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="codeforce.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="super-mario-bros" TARGET_NAME="codeforce.cpp" CONFIG_NAME="codeforce.cpp">
+      <option name="sourceFile" value="codeforce.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="super-mario-bros" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
       <option name="sourceFile" value="main.cpp" />
       <method v="2">
@@ -106,6 +146,15 @@
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="EXTERNAL_TOOL_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
+      <texify-external>
+        <program>PYTHONTEX</program>
+        <main-file />
+        <work-dir />
+        <envs />
+      </texify-external>
+      <method v="2" />
     </configuration>
     <configuration default="true" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
       <steps>
@@ -122,9 +171,25 @@
       </steps>
       <method v="2" />
     </configuration>
+    <configuration default="true" type="MAKEINDEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory">
+      <texify-makeindex>
+        <program>MAKEINDEX</program>
+        <main-file />
+        <command-line-args />
+        <work-dir />
+      </texify-makeindex>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="C/C++ File.codeforce.cpp" />
+      <item itemvalue="C/C++ File.main.cpp" />
+      <item itemvalue="C/C++ File.supermariobros.cpp" />
+      <item itemvalue="LaTeX.main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="C/C++ File.main.cpp" />
+        <item itemvalue="C/C++ File.codeforce.cpp" />
         <item itemvalue="C/C++ File.supermariobros.cpp" />
         <item itemvalue="LaTeX.main" />
       </list>
@@ -132,6 +197,12 @@
   </component>
   <component name="SelectedDebugProfileService"><![CDATA[{
   "profileIdByStamp": [
+    {
+      "first": {
+        "##RUN_CONFIGURATION##": "C/C++ File.codeforce.cpp"
+      },
+      "second": "646679f8-9115-4309-abe4-8fc30f1638b0"
+    },
     {
       "first": {
         "##RUN_CONFIGURATION##": "C/C++ File.supermariobros.cpp"
@@ -145,7 +216,7 @@
       "second": "646679f8-9115-4309-abe4-8fc30f1638b0"
     }
   ],
-  "modificationCount": 4
+  "modificationCount": 7
 }]]></component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -159,6 +230,12 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+    <isAutomaticBootstrapAfterUpdate value="false" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="OPEN_GENERIC_TABS">
