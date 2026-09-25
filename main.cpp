@@ -14,6 +14,9 @@
 #include <thread>
 #include <chrono>
 
+// Desde la terminal (para que se compilen los archivos juntos)
+// g++ main.cpp funciones.cpp -o main
+// ./main
 
 int main(){
 
@@ -55,7 +58,7 @@ int main(){
         {
             if (!movimiento_es_valido(marioColumna, opcion))
             {
-            std::cout << "invalid operation - fuera de los límites del mundo\n";
+            std::cout << "invalid operation - fuera de los limites del mundo\n";
             continue;
             }
             move_player(mundo, marioFila, marioColumna, opcion, numCoins, mundoCopia);
