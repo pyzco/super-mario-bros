@@ -168,23 +168,12 @@ inline int goomba[ALTO_GOOMBA][ANCHO_GOOMBA] = {
 // Recibe 'elemento' como un puntero a constante (const int*) para proteger la matriz original.
 void dibujar_elemento(int** mundo, int origenFila, int origenColumna, const int* elemento, int alto, int ancho);
 
-
-//////////////////////////////////////////////
-/// Funciones de configuración de personajes
-//////////////////////////////////////////////
-
-void draw_player(int** mundo, int origenFila, int origenColumna);
-
-void draw_whomp(int** mundo, int origenFila, int origenColumna);
-
-
-//////////////////////////////////////
-/// Funciones para generar el mundo
-//////////////////////////////////////
-
+// Asigna memoria dinámica para la matriz del mundo 2D e inicializa el suelo y los elementos estáticos (arbustos, bloques).
 int** crear_world();
+// Crea una copia del mundo original para poder restaurar los píxeles de Mario al moverse.
 int** crear_world_copia();
 
+// Renderiza toda la matriz del mundo en la consola aplicando los colores ANSI. Utiliza doble búfer/limpieza de pantalla.
 void draw_world(int **world, int coins);
 
 
@@ -192,10 +181,13 @@ void draw_world(int **world, int coins);
 /// Funciones para mecanicas del juego
 ///////////////////////////////////
 
+// Actualiza visualmente un bloque de signo/ladrillo a color negro tras ser golpeado.
 void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matrizCopia);
 
+// Verifica si Mario colisiona con un bloque de signo (valor 3) al saltar, gestionando la aparición de la moneda.
 bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** matrizCopia);
 
+// Detecta colisiones entre los bordes de la hitbox de Mario y la hitbox del Goomba para terminar el juego.
 bool check_game_over(int marioF, int marioC, int goombaF, int goombaC);
 
 
@@ -203,9 +195,14 @@ bool check_game_over(int marioF, int marioC, int goombaF, int goombaC);
 /// Funciones para el funcionamiento del jugador
 ///////////////////////////////////
 
+// Limpia los píxeles ocupados por Mario en su posición actual asignándolos a 0 (vacío).
 void borra_player(int** mundo, int origenFila, int origenColumna, int** matrizCopia);
 
-void move_player(int** mundo, int &marioFila, int &marioColumna, std::string option, int &numCoins, int** matrizCopia);
+// Limpia los píxeles de una moneda recolectada en la matriz del mundo.
+void borrar_moneda(int** mundo, int origenFila, int origenColumna);
+
+// Procesa el comando de movimiento del usuario, valida los límites del mapa, actualiza coordenadas y recolección de monedas.
+void move_player(int** mundo, int &marioFila, int &marioColumna, std::string option, int &numCoins, int** matrizCopia, int &monedaFila, int &monedaColumna);
 
 bool movimiento_es_valido(int marioColumna, std::string option);
 
