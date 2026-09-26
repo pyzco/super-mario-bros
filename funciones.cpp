@@ -203,7 +203,6 @@ void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matriz
 
 // obtener moneda del lucky coin - ?
 bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** matrizCopia, int &monedaFila, int &monedaColumna) {
-    //draw_player(mundo, marioFilaAire, marioColumnaAire);
 
     for (int c = marioColumnaAire; c < marioColumnaAire + ANCHO_MARIO; c++) {
         if (c >= 0 && c < COLUMNAS) {
@@ -319,13 +318,15 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     int filaDibujo = marioFila;
     if (option == "up" || option == "up-right" || option == "up-left") {
         filaDibujo = marioFila - 16;
+        if (monedaDibujada) {
+            dibujar_elemento(mundo, monedaFila, monedaColumna, &moneda[0][0], ALTO_MONEDA, ANCHO_MONEDA);
+        }
     }
     filaDibujoAnterior = filaDibujo;
-    draw_player(mundo, filaDibujo, marioColumna);
+    dibujar_elemento(mundo, filaDibujo, marioColumna, &mario[0][0], ALTO_MARIO, ANCHO_MARIO);
 
-    if (monedaDibujada) {
-        borrar_moneda(mundo, monedaFila, monedaColumna);
-    }
+    borrar_moneda(mundo, monedaFila, monedaColumna);
+
 }
 
 bool movimiento_es_valido(int marioColumna, std::string option) {

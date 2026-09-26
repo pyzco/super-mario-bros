@@ -34,10 +34,17 @@ extern const std::string FONDO_MARRON;
 
 extern std::string colores[9];
 
+
 ///////////////////////////////////
 /// Elementos del mundo
 ///////////////////////////////////
 
+// DEFINICIÓN DE SPRITES
+// Se definen los valores de los píxeles para cada elemento visual del juego.
+// Los números corresponden a los códigos de color en la función colorANSI().
+
+
+// Sprite Arbusto
 const int ALTO_ARBUSTO = 7;
 const int ANCHO_ARBUSTO = 8;
 
@@ -51,6 +58,8 @@ inline int arbusto[ALTO_ARBUSTO][ANCHO_ARBUSTO] = {
     {2, 2, 2, 2, 2, 2, 2, 2}
 };
 
+
+// Sprite Signo
 const int ALTO_SIGNO = 8;
 const int ANCHO_SIGNO = 9;
 
@@ -65,6 +74,8 @@ inline int signo[ALTO_SIGNO][ANCHO_SIGNO] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3}
 };
 
+
+// Sprite Ladrillo
 const int ALTO_LADRILLO = 8;
 const int ANCHO_LADRILLO = 9;
 
@@ -79,6 +90,8 @@ inline int ladrillo[ALTO_LADRILLO][ANCHO_LADRILLO] = {
     {1, 1, 1, 1, 4, 1, 1, 1, 1}
 };
 
+
+// Sprite Moneda
 const int ALTO_MONEDA = 7;
 const int ANCHO_MONEDA = 7;
 
@@ -92,10 +105,12 @@ const int moneda[ALTO_MONEDA][ANCHO_MONEDA] = {
     {0, 0, 3, 3, 3, 0, 0}
 };
 
+
 //////////////////////////////////////
 /// Personajes
 //////////////////////////////////////
 
+// Sprite Mario
 const int ALTO_MARIO = 16;
 const int ANCHO_MARIO = 12;
 
@@ -119,6 +134,7 @@ inline int mario[ALTO_MARIO][ANCHO_MARIO] = {
 };
 
 
+// Sprite Goomba
 const int ALTO_GOOMBA = 16;
 const int ANCHO_GOOMBA = 16;
 
@@ -142,29 +158,29 @@ inline int goomba[ALTO_GOOMBA][ANCHO_GOOMBA] = {
 };
 
 
-///////////////////////////////////
-/// Funciones de configurción del mundo
-///////////////////////////////////
+// Declaración de funciones del videojuego
 
-void colocar_arbusto(int** mundo, int origenFila, int origenColumna);
+///////////////////////////////////////////
+/// Funciones de configuración del mundo
+///////////////////////////////////////////
 
-void colocar_signo(int** mundo, int origenFila, int origenColumna);
+// Dibuja un sprite específico dentro de la matriz del mundo en las coordenadas indicadas.
+// Recibe 'elemento' como un puntero a constante (const int*) para proteger la matriz original.
+void dibujar_elemento(int** mundo, int origenFila, int origenColumna, const int* elemento, int alto, int ancho);
 
-void colocar_ladrillo(int** mundo, int origenFila, int origenColumna);
 
-
-///////////////////////////////////
+//////////////////////////////////////////////
 /// Funciones de configuración de personajes
-///////////////////////////////////
+//////////////////////////////////////////////
 
 void draw_player(int** mundo, int origenFila, int origenColumna);
 
 void draw_whomp(int** mundo, int origenFila, int origenColumna);
 
 
-///////////////////////////////////
+//////////////////////////////////////
 /// Funciones para generar el mundo
-///////////////////////////////////
+//////////////////////////////////////
 
 int** crear_world();
 int** crear_world_copia();
