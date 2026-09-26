@@ -104,10 +104,12 @@ int** crear_world(){
     
     // Posicionamiento inicial del enemigo (Goomba).
     dibujar_elemento(mundo, 27, 104, &goomba[0][0], ALTO_GOOMBA, ANCHO_GOOMBA);
-
+    dibujar_elemento(mundo, 27, 1, &mario[0][0], ALTO_MARIO, ANCHO_MARIO);
+    
     // Retorna el puntero doble al mapa inicializado.
     return mundo;
 }
+
 
 int** crear_world_copia(){
     int **mundo_copia = new int*[FILAS];
@@ -136,6 +138,7 @@ int** crear_world_copia(){
     dibujar_elemento(mundo_copia, 7, 109, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
     
     dibujar_elemento(mundo_copia, 27, 104, &goomba[0][0], ALTO_GOOMBA, ANCHO_GOOMBA);
+    
     return mundo_copia;
 }
 
@@ -165,14 +168,16 @@ void draw_world(int **world, int coins){
     }
     std::cout << lienzo;
     std::cout << "\ncoins = " << coins << "\n\n";
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(350));
 }
 
-///////////////////////////////////
-/// Funciones de juego
+//////////////////////////////////////
+/// Funciones para las mecanicas de juego
 //////////////////////////////////////
 
 // lucky block golpeado se vuelve negro
-void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matrizCopia) {
+void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matrizCopia, int &f_bloque, int &c_bloque) {
     int f_inicio = f_impacto;
     int c_inicio = c_impacto;
 
@@ -191,10 +196,13 @@ void pintar_bloque_negro(int** mundo, int f_impacto, int c_impacto, int** matriz
             }
         }
     }
+    // Retorna las coordenadas de origen a través de referencias para generar la moneda justo encima.
+    f_bloque = f_inicio;
+    c_bloque = c_inicio;
 }
 
 // obtener moneda del lucky coin - ?
-bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** matrizCopia) {
+bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** matrizCopia, int &monedaFila, int &monedaColumna) {
     //draw_player(mundo, marioFilaAire, marioColumnaAire);
 
     for (int c = marioColumnaAire; c < marioColumnaAire + ANCHO_MARIO; c++) {
@@ -202,7 +210,14 @@ bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** m
             for (int f = marioFilaAire; f < marioFilaAire + 4; f++) {
                 if (f >= 0 && f < FILAS) {
                     if (mundo[f][c] == 3) {
-                        pintar_bloque_negro(mundo, f, c, matrizCopia);
+                        int f_bloque, c_bloque;
+                        pintar_bloque_negro(mundo, f, c, matrizCopia, f_bloque, c_bloque);
+                        monedaFila = f_bloque - ALTO_MONEDA;
+                        monedaColumna = c_bloque + 1;
+                        
+                        // Aparece visualmente la moneda.
+                        dibujar_elemento(mundo, monedaFila, monedaColumna, &moneda[0][0], ALTO_MONEDA, ANCHO_MONEDA);
+                        
                         return true;
                     }
                 }
@@ -210,6 +225,17 @@ bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** m
         }
     }
     return false;
+}
+
+// Limpia una moneda recolectada del mapa reemplazando sus píxeles por vacío (0).
+void borrar_moneda(int** mundo, int origenFila, int origenColumna) {
+    for (int f = 0; f < ALTO_MONEDA; f++) {
+        for (int c = 0; c < ANCHO_MONEDA; c++) {
+            if (moneda[f][c] != 0) {
+                mundo[origenFila + f][origenColumna + c] = 0; 
+            }
+        }
+    }
 }
 
 // game over
@@ -248,6 +274,9 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     int nuevaCol = marioColumna;
     int nuevaFila = marioFila;
 
+    bool monedaDibujada = false;
+    int monedaFila, monedaColumna;
+
     if (option == "right") {
         if (marioColumna + 12 + ANCHO_MARIO <= COLUMNAS) {
             nuevaCol += 12;
@@ -259,8 +288,9 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     } else if (option == "up") {
         int filaAire = marioFila - 16;
         //borra_player(mundo,marioFila,marioColumna,matrizCopia); ////
-        if (collect_coins(mundo, filaAire, marioColumna, matrizCopia)) {
+        if (collect_coins(mundo, filaAire, marioColumna, matrizCopia, monedaFila, monedaColumna)) {
             numCoins++;
+            monedaDibujada = true;
         }
         //borra_player(mundo, filaAire, marioColumna, matrizCopia);
     } else if (option == "up-right") {
@@ -268,16 +298,18 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
             nuevaCol += 12;
         }
         int filaAire = marioFila - 16;
-        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia)) {
+        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia, monedaFila, monedaColumna)) {
             numCoins++;
+            monedaDibujada = true;
         }
     } else if (option == "up-left") {
         if (marioColumna - 12 >= 0) {
             nuevaCol -= 12;
         }
         int filaAire = marioFila - 16;
-        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia)) {
+        if (collect_coins(mundo, filaAire, nuevaCol, matrizCopia, monedaFila, monedaColumna)) {
             numCoins++;
+            monedaDibujada = true;
         }
     }
 
@@ -290,6 +322,10 @@ void move_player(int** mundo, int &marioFila, int &marioColumna, std::string opt
     }
     filaDibujoAnterior = filaDibujo;
     draw_player(mundo, filaDibujo, marioColumna);
+
+    if (monedaDibujada) {
+        borrar_moneda(mundo, monedaFila, monedaColumna);
+    }
 }
 
 bool movimiento_es_valido(int marioColumna, std::string option) {

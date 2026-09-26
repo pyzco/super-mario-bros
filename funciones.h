@@ -79,8 +79,21 @@ inline int ladrillo[ALTO_LADRILLO][ANCHO_LADRILLO] = {
     {1, 1, 1, 1, 4, 1, 1, 1, 1}
 };
 
+const int ALTO_MONEDA = 7;
+const int ANCHO_MONEDA = 7;
+
+const int moneda[ALTO_MONEDA][ANCHO_MONEDA] = {
+    {0, 0, 3, 3, 3, 0, 0},
+    {0, 3, 3, 4, 3, 3, 0},
+    {3, 3, 3, 4, 3, 3, 3},
+    {3, 3, 3, 4, 3, 3, 3},
+    {3, 3, 3, 4, 3, 3, 3},
+    {0, 3, 3, 4, 3, 3, 0},
+    {0, 0, 3, 3, 3, 0, 0}
+};
+
 //////////////////////////////////////
-/// Player skins
+/// Personajes
 //////////////////////////////////////
 
 const int ALTO_MARIO = 16;
@@ -105,9 +118,6 @@ inline int mario[ALTO_MARIO][ANCHO_MARIO] = {
     {0, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 0}
 };
 
-//////////////////////////////////////
-/// Whomp
-//////////////////////////////////////
 
 const int ALTO_GOOMBA = 16;
 const int ANCHO_GOOMBA = 16;
