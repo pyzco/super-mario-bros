@@ -36,8 +36,11 @@ int main(){
         std::cin >> opcion;
         if (!std::cin) return 0;
     } while(opcion != "init" && opcion !="exit");
-    if (opcion == "init")
+    if (opcion == "init"){
         draw_world(mundo, numCoins);
+        std::cout << "\nWelcome to the world of super mario bros xyz\n";
+    }
+        
     else
     {
         for (int i = 0; i < FILAS; i++)
@@ -86,7 +89,7 @@ int main(){
         }
         else if (opcion == "exit")
         {
-            std::cout<<"game over\n";
+            std::cout<<"salio del juego\n";
             break;
         }
         else

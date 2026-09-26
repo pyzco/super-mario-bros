@@ -109,10 +109,10 @@ inline int mario[ALTO_MARIO][ANCHO_MARIO] = {
 /// Whomp
 //////////////////////////////////////
 
-const int ALTO_WHOMP = 16;
-const int ANCHO_WHOMP = 16;
+const int ALTO_GOOMBA = 16;
+const int ANCHO_GOOMBA = 16;
 
-inline int whomp[ALTO_WHOMP][ANCHO_WHOMP] = {
+inline int goomba[ALTO_GOOMBA][ANCHO_GOOMBA] = {
     {0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 0, 0, 0, 0},

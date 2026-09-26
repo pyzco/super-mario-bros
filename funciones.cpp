@@ -32,39 +32,27 @@ std::string colores[9] = {
     COL_LIGHTBLUE, COL_LIGHTYELLOW, FONDO_MARRON };
 
     
-///////////////////////////////////
+//////////////////////////////////////////
 /// Funciones de configuración del mundo
-///////////////////////////////////
+//////////////////////////////////////////
 
-void colocar_arbusto(int** mundo, int origenFila, int origenColumna) {
-    for (int f = 0; f < ALTO_ARBUSTO; f++) {
-        for (int c = 0; c < ANCHO_ARBUSTO; c++) {
-            if (arbusto[f][c] == 2) {
-                mundo[origenFila + f][origenColumna + c] = 2;
+
+// Transfiere un sprite a la matriz del mundo gestionando la memoria contigua.
+void dibujar_elemento(int** mundo, int origenFila, int origenColumna, const int* elemento, int alto, int ancho) {
+    for (int f = 0; f < alto; f++) {
+        for (int c = 0; c < ancho; c++) {
+
+            // Se calcula el índice 1D equivalente para leer la matriz del sprite de forma segura.
+            int pixel = elemento[(f * ancho) + c];
+
+            // Solo sobreescribe el mundo si el píxel no es "transparente" (0).
+            if (pixel != 0) {
+                mundo[origenFila + f][origenColumna + c] = pixel; 
             }
         }
     }
 }
 
-void colocar_signo(int** mundo, int origenFila, int origenColumna) {
-    for (int f = 0; f < ALTO_SIGNO; f++) {
-        for (int c = 0; c < ANCHO_SIGNO; c++) {
-            if (signo[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = signo[f][c];
-            }
-        }
-    }
-}
-
-void colocar_ladrillo(int** mundo, int origenFila, int origenColumna) {
-    for (int f = 0; f < ALTO_LADRILLO; f++) {
-        for (int c = 0; c < ANCHO_LADRILLO; c++) {
-            if (ladrillo[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = ladrillo[f][c];
-            }
-        }
-    }
-}
 
 ///////////////////////////////////
 /// Funciones de personajes
@@ -80,20 +68,12 @@ void draw_player(int** mundo, int origenFila, int origenColumna) {
     }
 }
 
-void draw_whomp(int** mundo, int origenFila, int origenColumna) {
-    for (int f = 0; f < ALTO_WHOMP; f++) {
-        for (int c = 0; c < ANCHO_WHOMP; c++) {
-            if (whomp[f][c] != 0) {
-                mundo[origenFila + f][origenColumna + c] = whomp[f][c];
-            }
-        }
-    }
-}
 
-///////////////////////////////////
+//////////////////////////////////////
 /// Generar mundo
 //////////////////////////////////////
 
+// Inicializa el mapa del juego asignando memoria dinámica y colocando los elementos estáticos.
 int** crear_world(){
     int **mundo = new int*[FILAS];
 
@@ -108,22 +88,24 @@ int** crear_world(){
         }
     }
 
-    // colocar objetos
+    // Inserción de elementos del mundo (arbustos) en las coordenadas del suelo.
+    dibujar_elemento(mundo, 36, 21, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo, 36, 29, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo, 36, 37, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo, 36, 98, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    
+    // Inserción de bloques interactivos (signos) y estáticos (ladrillos) en el aire.
+    dibujar_elemento(mundo, 7, 29, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo, 7, 82, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo, 7, 100, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo, 7, 73, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    dibujar_elemento(mundo, 7, 91, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    dibujar_elemento(mundo, 7, 109, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    
+    // Posicionamiento inicial del enemigo (Goomba).
+    dibujar_elemento(mundo, 27, 104, &goomba[0][0], ALTO_GOOMBA, ANCHO_GOOMBA);
 
-    colocar_arbusto(mundo,36,21);
-    colocar_arbusto(mundo,36,29);
-    colocar_arbusto(mundo,36,37);
-    colocar_arbusto(mundo,7,29);
-    colocar_arbusto(mundo,36,98);
-    colocar_signo(mundo,7,29);
-    colocar_ladrillo(mundo,7,73);
-    colocar_signo(mundo,7,82);
-    colocar_ladrillo(mundo,7,91);
-    colocar_signo(mundo,7,100);
-    colocar_ladrillo(mundo,7,109);
-    draw_player(mundo,27,1);
-    draw_whomp(mundo,27,104);
-
+    // Retorna el puntero doble al mapa inicializado.
     return mundo;
 }
 
@@ -141,43 +123,47 @@ int** crear_world_copia(){
         }
     }
 
-    // colocar objetos
-
-    colocar_arbusto(mundo_copia,36,21);
-    colocar_arbusto(mundo_copia,36,29);
-    colocar_arbusto(mundo_copia,36,37);
-    colocar_arbusto(mundo_copia,7,29);
-    colocar_arbusto(mundo_copia,36,98);
-    colocar_signo(mundo_copia,7,29);
-    colocar_ladrillo(mundo_copia,7,73);
-    colocar_signo(mundo_copia,7,82);
-    colocar_ladrillo(mundo_copia,7,91);
-    colocar_signo(mundo_copia,7,100);
-    colocar_ladrillo(mundo_copia,7,109);
-    draw_whomp(mundo_copia,27,104);
-
+    dibujar_elemento(mundo_copia, 36, 21, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo_copia, 36, 29, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo_copia, 36, 37, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    dibujar_elemento(mundo_copia, 36, 98, &arbusto[0][0], ALTO_ARBUSTO, ANCHO_ARBUSTO);
+    
+    dibujar_elemento(mundo_copia, 7, 29, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo_copia, 7, 82, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo_copia, 7, 100, &signo[0][0], ALTO_SIGNO, ANCHO_SIGNO);
+    dibujar_elemento(mundo_copia, 7, 73, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    dibujar_elemento(mundo_copia, 7, 91, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    dibujar_elemento(mundo_copia, 7, 109, &ladrillo[0][0], ALTO_LADRILLO, ANCHO_LADRILLO);
+    
+    dibujar_elemento(mundo_copia, 27, 104, &goomba[0][0], ALTO_GOOMBA, ANCHO_GOOMBA);
     return mundo_copia;
 }
 
 
-/////////////////////////////////////
+//////////////////////////////////////
 /// Dibujar el mundo
 //////////////////////////////////////
 
+// Función encargada del dibujo en terminal. Dibuja el estado actual de la memoria en la pantalla.
 void draw_world(int **world, int coins){
+
+    // Código de escape ANSI para borrar la terminal completa y mover el cursor a [0,0] (evita parpadeos).
     std::cout << "\033[2J\033[H";
 
-    std::cout << "\nWelcome to the world of super mario bros xyz\n";
+    // Armamos el mapa completo en un solo texto y lo imprimimos de una vez para que no hallan parpadeos.
+    std::string lienzo = "";
+
 
     for (int f = 0; f < FILAS; f++){
         for (int c = 0; c < COLUMNAS; c++){
             int celda = world[f][c];
 
-            std::cout << colores[celda] << "  " << RESET;
+            lienzo += colores[celda] + "  " + RESET;
 
         }
-        std::cout << "\n";
+        lienzo += "\n";
     }
+    std::cout << lienzo;
     std::cout << "\ncoins = " << coins << "\n\n";
 }
 
@@ -228,9 +214,9 @@ bool collect_coins(int** mundo, int marioFilaAire, int marioColumnaAire, int** m
 
 // game over
 bool check_game_over(int marioF, int marioC, int goombaF, int goombaC) {
-    if (marioF < goombaF + ALTO_WHOMP &&
-        marioF + ALTO_MARIO > goombaF &&
-        marioC < goombaC + ANCHO_WHOMP &&
+    if (marioF < goombaF + ALTO_GOOMBA &&
+        marioF + ALTO_MARIO > goombaF&&
+        marioC < goombaC + ANCHO_GOOMBA &&
         marioC + ANCHO_MARIO > goombaC) {
         return true;
     }
@@ -238,7 +224,7 @@ bool check_game_over(int marioF, int marioC, int goombaF, int goombaC) {
 }
 
 
-///////////////////////////////////
+//////////////////////////////////////
 /// Funciones de jugador
 //////////////////////////////////////
 
